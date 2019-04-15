@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _200389510F.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,16 +9,17 @@ namespace _200389510F.Controllers
 {
     public class HomeController : Controller
     {
+        private ChatMessageContext db = new ChatMessageContext();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Chat()
         {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View(db.ChatMessages.ToList());
         }
 
         public ActionResult Contact()

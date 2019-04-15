@@ -1,5 +1,7 @@
-﻿using System;
+﻿using _200389510F.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +14,8 @@ namespace _200389510F
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new ChatMessageContextInitializer());
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

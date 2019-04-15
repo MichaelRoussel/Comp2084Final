@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,7 @@ namespace _200389510F.Models
         [Required]
 
         public virtual string Message { get; set; }
+        [Required]
         public virtual string Name { get; set; }
         public virtual DateTime Date { get; set; }
 
