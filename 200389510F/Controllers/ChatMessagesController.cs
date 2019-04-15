@@ -18,23 +18,13 @@ namespace _200389510F.Controllers
         [Route("Chat")]
         public ActionResult Index()
         {
-            return View(db.ChatMessages.ToList());
+            ChatMessageViewModel vm = new ChatMessageViewModel()
+            {
+                Messages = db.ChatMessages.ToList()
+            };
+            return View(vm);
         }
 
-        // GET: ChatMessages/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ChatMessage chatMessage = db.ChatMessages.Find(id);
-            if (chatMessage == null)
-            {
-                return HttpNotFound();
-            }
-            return View(chatMessage);
-        }
 
         // GET: ChatMessages/Create
         public ActionResult Create()
@@ -45,76 +35,33 @@ namespace _200389510F.Controllers
         // POST: ChatMessages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Chat")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Message,Name,Date")] ChatMessage chatMessage)
+        public ActionResult Create([Bind(Include = "ID,Message,Name,Date")] ChatMessage newMessage)
         {
+            ChatMessageViewModel vm;
             if (ModelState.IsValid)
             {
-                db.ChatMessages.Add(chatMessage);
+                newMessage.Date = DateTime.Now;
+                db.ChatMessages.Add(newMessage);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ModelState.Clear();
+                vm = new ChatMessageViewModel()
+                {
+                    Messages = db.ChatMessages.ToList(),
+                };
+                return PartialView("Index", vm);
             }
 
-            return View(chatMessage);
+            vm = new ChatMessageViewModel()
+            {
+                Messages = db.ChatMessages.ToList(),
+                newMessage = newMessage
+            };
+            return PartialView("Index", vm);
         }
 
-        // GET: ChatMessages/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ChatMessage chatMessage = db.ChatMessages.Find(id);
-            if (chatMessage == null)
-            {
-                return HttpNotFound();
-            }
-            return View(chatMessage);
-        }
-
-        // POST: ChatMessages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Message,Name,Date")] ChatMessage chatMessage)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(chatMessage).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(chatMessage);
-        }
-
-        // GET: ChatMessages/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ChatMessage chatMessage = db.ChatMessages.Find(id);
-            if (chatMessage == null)
-            {
-                return HttpNotFound();
-            }
-            return View(chatMessage);
-        }
-
-        // POST: ChatMessages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            ChatMessage chatMessage = db.ChatMessages.Find(id);
-            db.ChatMessages.Remove(chatMessage);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

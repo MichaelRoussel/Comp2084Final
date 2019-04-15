@@ -140,6 +140,7 @@
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\ChatMessageContext.cs" />
     <Compile Include="Models\ChatMessageContextInitializer.cs" />
+    <Compile Include="Models\ChatMessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,10 +179,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ChatMessages\Create.cshtml" />
-    <Content Include="Views\ChatMessages\Delete.cshtml" />
-    <Content Include="Views\ChatMessages\Details.cshtml" />
-    <Content Include="Views\ChatMessages\Edit.cshtml" />
     <Content Include="Views\ChatMessages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
